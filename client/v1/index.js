@@ -32,7 +32,8 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // I can find on these e-shops
 // 2. Log the variable
 
-
+var cheapest_shirt_hoopla = "https://hopaal.com/collections/homme/products/classique-noir-t-shirt-homme?variant=39629285949624";
+console.log(cheapest_shirt_hoopla)
 
 
 
@@ -45,6 +46,11 @@ console.log(MY_FAVORITE_BRANDS[0]);
  * 👕
  */
 
+
+const lengthmarketplace = marketplace.length;
+console.log(lengthmarketplace)
+
+
 // 🎯 TODO: Number of products
 // 1. Create a variable and assign it the number of products
 // 2. Log the variable
@@ -55,11 +61,28 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // 2. Log the variable
 // 3. Log how many brands we have
 
+var brands_name_set = new Set(marketplace.map(element => element.brand));
+var brands_name = Array.from(brands_name_set);
+console.log(`Brands name : ${brands_name}`);
+console.log(`Number of brands: ${brands_name.length}`);
 
 // 🎯 TODO: Sort by price
 // 1. Create a function to sort the marketplace products by price
 // 2. Create a variable and assign it the list of products by price from lowest to highest
-// 3. Log the variable
+
+
+function sortbyprice(tableau)
+{
+  tableau.sort((a, b) => b.price - a.price);
+
+  tableau.forEach((e) => {
+      console.log(`${e.price} ${e.link} ${e.name}`);
+  });
+}
+
+sortbyprice(marketplace);
+
+
 
 
 // 🎯 TODO: Sort by date
