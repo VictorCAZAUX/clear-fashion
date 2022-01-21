@@ -76,11 +76,11 @@ function sortbyprice(tableau)
   tableau.sort((a, b) => b.price - a.price);
 
   tableau.forEach((e) => {
-      console.log(`${e.price} ${e.link} ${e.name}`);
+      console.log(`${e.price} ${e.name} ${e.link}`);
   });
 }
 
-sortbyprice(marketplace);
+//sortbyprice(marketplace);
 
 
 
@@ -90,17 +90,40 @@ sortbyprice(marketplace);
 // 2. Create a variable and assign it the list of products by date from recent to old
 // 3. Log the variable
 
+function sortbydate(tableau)
+{
+  tableau.sort((a, b) => b.date - a.date);
+
+  tableau.forEach((e) => {
+      console.log(`${e.date} ${e.name} ${e.link}`);
+  });
+}
+
+//sortbydate(marketplace);
+
 
 // 🎯 TODO: Filter a specific price range
 // 1. Filter the list of products between 50€ and 100€
 // 2. Log the list
+
+marketplace.forEach((e) => {
+  if(e.price > 50 & e.price < 100)
+  {
+    console.log(`${e.price} $ ${e.name} ${e.link}`)
+  }
+});
 
 
 // 🎯 TODO: Average Basket
 // 1. Determine the average basket of the marketplace
 // 2. Log the average
 
-
+var total = 0;
+marketplace.forEach((e) => {
+  total += e.price;
+});
+var average = total/140;
+console.log(`Le prix moyen d'un article est : ${average}$`);
 
 
 
