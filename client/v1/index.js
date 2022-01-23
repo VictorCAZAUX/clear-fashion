@@ -85,6 +85,7 @@ function sortbyprice(tableau)
 
 
 
+
 // 🎯 TODO: Sort by date
 // 1. Create a function to sort the marketplace objects by products date
 // 2. Create a variable and assign it the list of products by date from recent to old
@@ -147,13 +148,37 @@ console.log(`Le prix moyen d'un article est : ${average}$`);
 //   'brand-name-n': [{...}, {...}, ..., {...}],
 // };
 //
+
+const brands = {};
+brands_name.forEach(name => {
+  brands[name] = [];
+  marketplace.forEach(item => {
+    if(name == item.brand){
+      brands[name].push(item);
+    }
+  });
+});
+
 // 2. Log the variable
+console.log(brands);
 // 3. Log the number of products by brands
+
+for(var brand in brands){
+  console.log(`brand: ${brand}, number of products : ${brands[brand].length}`)
+};
 
 
 // 🎯 TODO: Sort by price for each brand
 // 1. For each brand, sort the products by price, from highest to lowest
 // 2. Log the sort
+
+console.log("TODO BRANDS SORT BY PRICE");
+
+
+for(var brand in brands) {
+  sortbyprice(brands[brand])
+};
+
 
 
 // 🎯 TODO: Sort by date for each brand
@@ -161,7 +186,9 @@ console.log(`Le prix moyen d'un article est : ${average}$`);
 // 2. Log the sort
 
 
-
+for(var brand in brands) {
+  sortbydate(brands[brand])
+};
 
 
 /**
@@ -175,8 +202,24 @@ console.log(`Le prix moyen d'un article est : ${average}$`);
 // 1. Compute the p90 price value of each brand
 // The p90 value (90th percentile) is the lower value expected to be exceeded in 90% of the products
 
+console.log("TODO P90");
+
+const sortedBrandsbyPrice = brands;
+for(var brand in sortedBrandsbyPrice) {
+  brands[brand].sort(function(a,b){
+    return b.price-a.price;
+  });
+}
 
 
+
+var rank = 0.09;
+for(var brand in sortedBrandsbyPrice) {
+  
+  var percentile = sortedBrandsbyPrice[brand].length;
+  var indexpercentile = Math.round(rank*percentile)
+  console.log(`brand : ${brand} , p90 : ${sortedBrandsbyPrice[brand][indexpercentile].price}`);
+};
 
 
 /**
@@ -256,15 +299,47 @@ const COTELE_PARIS = [
 // // 1. Log if coteleparis is a reasonable price shop (true or false)
 // // A reasonable price if all the products are less than 100€
 
+var reasonable = 1;
+COTELE_PARIS.forEach((e) => {
+  if(e.price > 100)
+  {
+    reasonable = 0;
+  }
+})
+if(reasonable == 0)
+{
+  console.log("Cotele paris is not a reasonable price shop");
+}
+else
+{
+  console.log("Cotele paris is a reasonable price shop");
+}
+
 
 // 🎯 TODO: Find a specific product
 // 1. Find the product with the uuid `b56c6d88-749a-5b4c-b571-e5b5c6483131`
 // 2. Log the product
 
+COTELE_PARIS.forEach((e) => {
+  if(e.uuid == "b56c6d88-749a-5b4c-b571-e5b5c6483131")
+  {
+    console.log(e.price,e.link,e.name,e.uuid,e.released);
+  }
+})
 
 // 🎯 TODO: Delete a specific product
 // 1. Delete the product with the uuid `b56c6d88-749a-5b4c-b571-e5b5c6483131`
 // 2. Log the new list of product
+
+var indexx = COTELE_PARIS.findIndex(isLargeNumber);
+COTELE_PARIS.forEach((e) => {
+  if(e.uuid == "b56c6d88-749a-5b4c-b571-e5b5c6483131")
+  {
+    indexx = array1.findIndex(isLargeNumber)
+  }
+})
+
+
 
 // 🎯 TODO: Save the favorite product
 let blueJacket = {
