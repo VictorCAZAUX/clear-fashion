@@ -10,8 +10,11 @@ const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
-const selectBrands = document.querySelector('#brand-select');
+const selectBrand = document.querySelector('#brand-select');
 const checkReasonablePrice = document.querySelector('#reasonable-check');
+const checkRecent = document.querySelector('#recently-check');
+const selectSort = document.querySelector('#sort-select');
+const spanNbNewProducts = document.querySelector('#nbNewProducts');
 
 /**
  * Set global value
@@ -75,17 +78,58 @@ const renderProducts = products => {
         const reasonableFilter = products.filter(product => product.price < 100);
         products = reasonableFilter;
     }
+    if (checkRecent.checked == true) {
+      var d = new Date();
+      d.setDate(d.getDate() - 14);
+      let dstring = d.getFullYear() + "-" + d.getMonth() + "-"+ d.getDay();
+      const recentFilter = products.filter(product => product.released > dstring);
+      products = recentFilter;
+  }
+
+  let nbSort = selectSort.selectedIndex;
+  if (nbSort == 0) {
+
+      products.sort(function (a, b) {
+          return parseInt(a.price) - parseInt(b.price);
+      });
+
+  }
+  if (nbSort == 1) {
+
+      products.sort(function (b, a) {
+          return parseInt(a.price) - parseInt(b.price);
+      });
+
+  }
+
+  if (nbSort == 2) {
+
+      products.sort(function (b, a) {
+          return parseInt(a.released) - parseInt(b.released);
+      });
+
+  }
+
+  if (nbSort == 3) {
+
+      products.sort(function (a, b) {
+          return parseInt(a.released) - parseInt(b.released);
+      });
+
+  }
+  console.log(products.length);
   const template = products
-    .map(product => {
-      return `
-      <div class="product" id=${product.uuid}>
-        <span>${product.brand}</span>
-        <a href="${product.link}">${product.name}</a>
-        <span>${product.price}</span>
-      </div>
-    `;
-    })
-    .join('');
+      .map(product => {
+          return `
+    <div class="product" id=${product.uuid}>
+      <span>${product.brand}</span>
+      <a href="${product.link}">${product.name}</a>
+      <span>${product.price}</span>
+      <input type="checkbox" id="favourite-check">
+    </div>
+  `;
+      })
+      .join('');
 
   div.innerHTML = template;
   fragment.appendChild(div);
@@ -94,35 +138,7 @@ const renderProducts = products => {
 };
 
 
-const renderBrands = products => {
-  let brands = [];
-  products.forEach((e) => {
-    
-    if(brands.includes(e.brand) == false)
-    {
-      brands.push(e.brand);
-      
-    }
-  })
-  console.log(brands)
-  
-  //const {currentPage, pageCount} = pagination;
-  const options = Array.from(
-    {'length': brands.length},
-    (value, index) => `<option value="${brands[index]}">${brands[index]}</option>`
-  ).join('');
 
-  selectBrands.innerHTML = options;
-  selectBrands.selectedIndex = options.value;
-
-  products = products.filter(function(product){
-    return product.brand = selectBrands.options[selectBrands.selectedIndex].value;
-  });
-  
-
-
-
-}
 
 
 /**
@@ -171,9 +187,7 @@ selectShow.addEventListener('change', event => {
     .then(() => render(currentProducts, currentPagination));
 });
 
-selectBrands.addEventListener('change', event => {
-  render(currentProducts,currentPagination);
-});
+
 
 
 selectPage.addEventListener('change', event => {
@@ -191,3 +205,17 @@ document.addEventListener('DOMContentLoaded', () =>
 checkReasonablePrice.addEventListener('change', event => {
   (render(currentProducts, currentPagination))
 });
+
+
+checkRecent.addEventListener('change', event => {
+  (render(currentProducts, currentPagination))
+});
+
+
+selectSort.addEventListener('change', event => {
+  (render(currentProducts, currentPagination))
+});
+
+selectBrand.addEventListener('change', event => {
+  render(currentProducts, currentPagination);
+ });
