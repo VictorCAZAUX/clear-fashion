@@ -10,6 +10,8 @@ const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
+const selectBrands = document.querySelector('#brand-select');
+const checkReasonablePrice = document.querySelector('#reasonable-check');
 
 /**
  * Set global value
@@ -46,6 +48,22 @@ const fetchProducts = async (page = 1, size = 12) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Render list of products
  * @param  {Array} products
@@ -53,6 +71,10 @@ const fetchProducts = async (page = 1, size = 12) => {
 const renderProducts = products => {
   const fragment = document.createDocumentFragment();
   const div = document.createElement('div');
+  if (checkReasonablePrice.checked == true) {
+        const reasonableFilter = products.filter(product => product.price < 100);
+        products = reasonableFilter;
+    }
   const template = products
     .map(product => {
       return `
@@ -70,6 +92,38 @@ const renderProducts = products => {
   sectionProducts.innerHTML = '<h2>Products</h2>';
   sectionProducts.appendChild(fragment);
 };
+
+
+const renderBrands = products => {
+  let brands = [];
+  products.forEach((e) => {
+    
+    if(brands.includes(e.brand) == false)
+    {
+      brands.push(e.brand);
+      
+    }
+  })
+  console.log(brands)
+  
+  //const {currentPage, pageCount} = pagination;
+  const options = Array.from(
+    {'length': brands.length},
+    (value, index) => `<option value="${brands[index]}">${brands[index]}</option>`
+  ).join('');
+
+  selectBrands.innerHTML = options;
+  selectBrands.selectedIndex = options.value;
+
+  products = products.filter(function(product){
+    return product.brand = selectBrands.options[selectBrands.selectedIndex].value;
+  });
+  
+
+
+
+}
+
 
 /**
  * Render page selector
@@ -100,6 +154,7 @@ const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
+  renderBrands(products);
 };
 
 /**
@@ -116,6 +171,10 @@ selectShow.addEventListener('change', event => {
     .then(() => render(currentProducts, currentPagination));
 });
 
+selectBrands.addEventListener('change', event => {
+  render(currentProducts,currentPagination);
+});
+
 
 selectPage.addEventListener('change', event => {
   fetchProducts(parseInt(event.target.value),currentPagination.pageSize)
@@ -128,3 +187,7 @@ document.addEventListener('DOMContentLoaded', () =>
     .then(setCurrentProducts)
     .then(() => render(currentProducts, currentPagination))
 );
+
+checkReasonablePrice.addEventListener('change', event => {
+  (render(currentProducts, currentPagination))
+});
