@@ -6,6 +6,7 @@ const cheerio = require('cheerio');
  * @param  {String} data - html response
  * @return {Array} products
  */
+const brand = "montlimart"
 const parse = data => {
   const $ = cheerio.load(data);
 
@@ -22,7 +23,7 @@ const parse = data => {
           .text()
       );
 
-      return {name, price};
+      return {name, price,brand};
     })
     .get();
 };

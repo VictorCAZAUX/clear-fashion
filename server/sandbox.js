@@ -3,6 +3,9 @@ const dedicatedbrand = require('./sources/dedicatedbrand');
 const montlimart = require('./sources/montlimart');
 const adresseparis = require('./sources/adresseparis');
 const fs = require('fs');
+const {MongoClient} = require('mongodb');
+const MONGODB_URI = 'mongodb+srv://victor:T7zXLcpmf6p73vcO@Cluster0.miqnt.mongodb.net/clear-fashion?retryWrites=true&w=majority';
+const MONGODB_DB_NAME = 'Cluster0';
 
 async function sandbox (/*eshop = 'https://www.dedicatedbrand.com/en/men/news'*/) {
   try {
@@ -67,6 +70,15 @@ async function sandbox (/*eshop = 'https://www.dedicatedbrand.com/en/men/news'*/
     console.log(`👕 ${products.length} total of products found`);
     // save products into json file
     fs.writeFileSync('all_products.json', JSON.stringify(products));
+
+    const client = await MongoClient.connect(MONGODB_URI, {'useNewUrlParser': true});
+    const db =  client.db(MONGODB_DB_NAME);
+    const collection = db.collection('products');
+    const result = collection.insertMany(products);
+    console.log(result);
+    
+    
+
     
 
 
@@ -97,3 +109,14 @@ async function sandbox (/*eshop = 'https://www.dedicatedbrand.com/en/men/news'*/
 const [,, eshop] = process.argv;
 
 sandbox(eshop);
+
+
+
+
+
+
+
+
+
+
+
