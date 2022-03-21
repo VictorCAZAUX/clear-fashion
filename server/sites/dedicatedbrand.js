@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
-const {'v5': uuidv5} = require('uuid');
+
 
 /**
  * Parse webpage restaurant
@@ -32,7 +32,7 @@ const parse = data => {
         'photo': $(element)
           .find('.productList-image img')
           .attr('src'),
-        '_id': uuidv5(link, uuidv5.URL)
+        
       };
     })
     .get();

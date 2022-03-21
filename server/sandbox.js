@@ -2,6 +2,7 @@
 const dedicatedbrand = require('./sources/dedicatedbrand');
 const montlimart = require('./sources/montlimart');
 const adresseparis = require('./sources/adresseparis');
+const loom = require('./sources/loom');
 const fs = require('fs');
 const {MongoClient} = require('mongodb');
 const MONGODB_URI = 'mongodb+srv://victor:T7zXLcpmf6p73vcO@Cluster0.miqnt.mongodb.net/clear-fashion?retryWrites=true&w=majority';
@@ -62,6 +63,15 @@ async function sandbox (/*eshop = 'https://www.dedicatedbrand.com/en/men/news'*/
     for(let page of pages){
       console.log(`🕵️‍♀️  scraping ${page}`);
       let results = await montlimart.scrape(page);
+      console.log(`👕 ${results.length} products found`);
+      products.push(results.flat());
+    }
+
+    // loom scrapping
+    pages = ['https://www.loom.fr/collections/tous-les-vetements',];
+    for(let page of pages){
+      console.log(`🕵️‍♀️  scraping ${page}`);
+      let results = await loom.scrape(page);
       console.log(`👕 ${results.length} products found`);
       products.push(results.flat());
     }

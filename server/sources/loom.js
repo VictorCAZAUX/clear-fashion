@@ -1,36 +1,36 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-/**
- * Parse webpage e-shop
- * @param  {String} data - html response
- * @return {Array} products
- */
-const brand = "dedicated"
-const parse = data => {
-  const $ = cheerio.load(data);
 
-  return $('.productList-container .productList')
+/**
+ * Parse webpage restaurant
+ * @param  {String} data - html response
+ * @return {Object} restaurant
+ */
+const parse = data => {
+  const $ = cheerio.load(data, {'xmlMode': true});
+
+  return $('.product-grid__item')
     .map((i, element) => {
-      const link = `https://www.dedicatedbrand.com${$(element)
-        .find('.productList-link')
+      const link = `https://www.loom.fr${$(element)
+        .find('.product-title a')
         .attr('href')}`;
 
       return {
         link,
-        'brand': 'dedicated',
+        'brand': 'loom',
         'price': parseInt(
           $(element)
-            .find('.productList-price')
+            .find('.money')
             .text()
         ),
         'name': $(element)
-          .find('.productList-title')
+          .find('.product-title')
           .text()
           .trim()
           .replace(/\s/g, ' '),
         'photo': $(element)
-          .find('.productList-image .js-lazy entered loaded')
+          .find('noscript img.product_card__image')
           .attr('src'),
         
       };

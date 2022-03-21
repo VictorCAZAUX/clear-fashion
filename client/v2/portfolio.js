@@ -4,6 +4,7 @@
 // current products on the page
 let currentProducts = [];
 let currentPagination = {};
+let currentBrand = "all";
 
 // inititiqte selectors
 const selectShow = document.querySelector('#show-select');
@@ -29,16 +30,19 @@ const setCurrentProducts = ({result, meta}) => {
 /**
  * Fetch products from api
  * @param  {Number}  [page=1] - current page to fetch
- * @param  {Number}  [size=12] - size of the page
+ * @param  {Number}  [limit=12] - size of the page
  * @return {Object}
  */
-const fetchProducts = async (page = 1, size = 12) => {
+const fetchProducts = async (page = 1, limit = 12 ,brand=currentBrand) => {
   try {
+    currentBrand = brand;
+    
     const response = await fetch(
-      `https://clear-fashion-api.vercel.app?page=${page}&size=${size}`
+      `https://server-ebon-nine.vercel.app/products/search?page=${page}&limit=${limit}&brand=${brand}`
+      
     );
     const body = await response.json();
-
+      console.log(body)
     if (body.success !== true) {
       console.error(body);
       return {currentProducts, currentPagination};
@@ -217,5 +221,7 @@ selectSort.addEventListener('change', event => {
 });
 
 selectBrand.addEventListener('change', event => {
-  render(currentProducts, currentPagination);
+  fetchProducts(currentPagination.currentPage,currentPagination.pageSize,event.target.value)
+    .then(setCurrentProducts)
+    .then(() => render(currentProducts, currentPagination));
  });
