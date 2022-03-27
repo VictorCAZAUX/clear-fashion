@@ -82,60 +82,47 @@ const renderProducts = products => {
         const reasonableFilter = products.filter(product => product.price < 100);
         products = reasonableFilter;
     }
-    if (checkRecent.checked == true) {
-      var d = new Date();
-      d.setDate(d.getDate() - 14);
-      let dstring = d.getFullYear() + "-" + d.getMonth() + "-"+ d.getDay();
-      const recentFilter = products.filter(product => product.released > dstring);
-      products = recentFilter;
-  }
+    
 
-  let nbSort = selectSort.selectedIndex;
-  if (nbSort == 0) {
-
-      products.sort(function (a, b) {
-          return parseInt(a.price) - parseInt(b.price);
-      });
-
-  }
-  if (nbSort == 1) {
-
-      products.sort(function (b, a) {
-          return parseInt(a.price) - parseInt(b.price);
-      });
-
-  }
-
-  if (nbSort == 2) {
-
-      products.sort(function (b, a) {
-          return parseInt(a.released) - parseInt(b.released);
-      });
-
-  }
-
-  if (nbSort == 3) {
-
-      products.sort(function (a, b) {
-          return parseInt(a.released) - parseInt(b.released);
-      });
-
-  }
+ 
   console.log(products.length);
-  const template = products
-      .map(product => {
-          return `
-    <div class="product" id=${product.uuid}>
-      <span>${product.brand}</span>
-      <a href="${product.link}">${product.name}</a>
-      <span>${product.price}</span>
-      <input type="checkbox" id="favourite-check">
-    </div>
-  `;
+  let tesst = ``;
+  const template = products 
+   .map(product => {
+    return `
+      <tr>
+        <th scope="row">${product.name} 🏷️</th>
+        <td>${product.brand} ™</td>
+        <td>${product.price} €</td>
+        <td><img src="${product.photo}" width="300" height="300"></td>
+      </tr>
+      `;
       })
       .join('');
+    
 
-  div.innerHTML = template;
+
+
+    
+  
+      
+  const table = `
+  <table>
+    <caption>Produits disponibles</caption>
+    <tr>
+        <th scope="col">Article</th>
+        <th scope="col">Marque</th>
+        <th scope="col">Prix</th>
+        <th scope="col">Photo</th>
+    </tr>
+    ` + template +
+     `
+    
+   
+    
+</table>
+  `
+  div.innerHTML = table;
   fragment.appendChild(div);
   sectionProducts.innerHTML = '<h2>Products</h2>';
   sectionProducts.appendChild(fragment);
@@ -174,7 +161,7 @@ const render = (products, pagination) => {
   renderProducts(products);
   renderPagination(pagination);
   renderIndicators(pagination);
-  renderBrands(products);
+  
 };
 
 /**
@@ -211,9 +198,7 @@ checkReasonablePrice.addEventListener('change', event => {
 });
 
 
-checkRecent.addEventListener('change', event => {
-  (render(currentProducts, currentPagination))
-});
+
 
 
 selectSort.addEventListener('change', event => {
@@ -225,3 +210,5 @@ selectBrand.addEventListener('change', event => {
     .then(setCurrentProducts)
     .then(() => render(currentProducts, currentPagination));
  });
+
+
