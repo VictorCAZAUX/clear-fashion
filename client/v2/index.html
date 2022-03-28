@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 
 <html>
+  
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel='stylesheet' href="style.css">
-    <title>👕 Clear Fahion | Environmentally & human-friendly clothes</title>
+    <title>🏄 Clear Fashion 2.0 🏄</title>
   </head>
   <body>
-    <h1>Clear fashion - Victor CAZAUX</h1>
+    <div class="row">
+      <div class="column">
+        <img src="aaaaa.gif"  style="width:50%">
+      </div>
+      <div class="column">
+        <img src="c.gif"  style="width:30%">
+      </div>
+      <div class="column">
+        <img src="b.gif"  style="width:50%">
+      </div>
+    </div>
+
+    <h1>Author : Victor CAZAUX </h1>
     
     <section id="options">
       <div id="show">
@@ -24,10 +37,7 @@
       </div>
       <strong>Filters</strong>
       
-      <div id="reasonable">
-        <label for="reasonable-check">By reasonable price</label>
-        <input type="checkbox" id="reasonable-check">
-    </div>
+     
     <div id="brand">
       <label for="brand-select">By brands:</label>
       <select name="brand" id="brand-select">
@@ -41,47 +51,28 @@
   <div id="sort">
     <label for="sort-select">Sort:</label>
     <select name="sort" id="sort-select">
+      <option value="no-sort">No Sort</option>
         <option value="price-asc">Cheaper</option>
         <option value="price-desc">Expensive</option>
-        <option value="date-asc">Recently released</option>
-        <option value="date-desc">Anciently released</option>
+        <option value="only-tshirts">T-Shirt</option>
+        <option value="only-sweaters">Sweaters</option>
+        <option value="only-pants">Pants</option>
+        
     </select>
 </div>
 </section>
 <section id="indicators">
-  <h2>Indicators</h2>
-  <div>
-    <span>Number of products</span>
-    <span id="nbProducts">0</span>
-  </div>
-  <div>
-    <span>Number of new products</span>
-    <span>0</span>
-  </div>
-  <div>
-    <span>p50 price value</span>
-    <span>0</span>
-  </div>
-  <div>
-    <span>p90 price value</span>
-    <span>0</span>
-  </div>
-  <div>
-    <span>p95 price value</span>
-    <span>0</span>
-  </div>
-  <div>
-    <span>Last released date</span>
-    <span>2020-01-01</span>
-  </div>
+  
   
 </section>
 <section id="products"></section>
 <script type="text/javascript" charset="UTF-8" src="portfolio.js"></script>
 </body>
+
+
 </html>
 
       
-        
+
         
     
